@@ -1,4 +1,4 @@
-var bcrypt = require('bcryptjs')
+
 var con = require('./mydb_connection');
 var express = require('express');
 var bodyParser = require('body-parser');
@@ -12,9 +12,8 @@ app.use(bodyParserJSON);
 app.use(bodyParserURLEncoded);
 
 
-var router = express.Router();
 /* GET users listing. */
-var saltRounds = 10
+
 
 
 var crypto = require('crypto'),
@@ -36,7 +35,7 @@ function decrypt(text){
 }
 
 //creation
-app.post('/app/user',async function(req, res, next) {
+app.post('/app/user', function(req, res, next) {
     console.log(req.body);
     var username=req.body.username
     var password=req.body.password
@@ -59,11 +58,11 @@ app.post('/app/user',async function(req, res, next) {
 
 
 //account login
-app.post('/app/user/auth',async function(req, res, next) {
+app.post('/app/user/auth', function(req, res, next) {
     console.log(req.body);
     var username=req.body.username
     var password=req.body.password
-    con.query('SELECT * FROM users WHERE username = ?',[username], async function (error, results, fields) {
+    con.query('SELECT * FROM users WHERE username = ?',[username],  function (error, results, fields) {
         if (error) {
           res.send({
             "code":400,
@@ -99,7 +98,7 @@ app.post('/app/user/auth',async function(req, res, next) {
 
 
 //save a note
-app.post('/app/sites',async function(req, res, next) {
+app.post('/app/sites', function(req, res, next) {
     console.log(req.body);
     var user = req.query.userId
     var notes = req.body.notes
@@ -120,8 +119,8 @@ app.post('/app/sites',async function(req, res, next) {
 
 
 
-
-app.get('/app/sites/list', function(req, res, next) {
+// get the notes
+app.get('/app/sites/list',function(req, res, next) {
     console.log(req.body);
     var userid= req.query.userId
 
@@ -149,4 +148,3 @@ app.get('/app/sites/list', function(req, res, next) {
 app.listen(3000,function (){
     console.log('Server running on 3000 port')
 })
-module.exports = app;
