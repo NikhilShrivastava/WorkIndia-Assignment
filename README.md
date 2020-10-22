@@ -52,8 +52,11 @@ Response Data: {
 ## How to Run 
 Clone the repository in your PC and then open terminal in the folder and type 
 ```
+npm install
+```
+After this write this command
+```
 npm start
 ```
-
 
 
